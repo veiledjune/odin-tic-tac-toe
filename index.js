@@ -49,14 +49,14 @@ const playGame = (() => {
         gameboard[a] === gameboard[b] &&
         gameboard[a] === gameboard[c]
       ) {
-        console.log(`${gameboard[a]} wins`);
+        render.updateResult(`Player ${gameboard[a]} Wins`);
         gameStatus.gameActive = false;
         return;
       }
     }
     if (gameboard.every((square) => square)) {
       gameStatus.gameActive = false;
-      console.log('tie');
+      render.updateResult('Tie');
     }
   };
   return { checkWin, getGameStatus, updatePlayerTurn };
@@ -78,7 +78,12 @@ const render = (() => {
       gameContainer.appendChild(div);
     }
   };
-  return { renderBoard };
+
+  const updateResult = (msg) => {
+    const displayElement = document.querySelector('.result-msg');
+    displayElement.textContent = msg;
+  };
+  return { renderBoard, updateResult };
 })();
 
 render.renderBoard();
