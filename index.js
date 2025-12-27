@@ -62,20 +62,23 @@ const playGame = (() => {
   return { checkWin, getGameStatus, updatePlayerTurn };
 })();
 
-function render() {
-  const gameboard = Gameboard.gameboardArr;
-  const gameContainer = document.querySelector('.game-container');
-  gameContainer.textContent = '';
-  for (let i = 0; i < 9; i++) {
-    const div = document.createElement('div');
-    div.classList.add('square');
-    div.textContent = gameboard[i];
-    div.addEventListener('click', () => {
-      Gameboard.addMarker(i);
-      render();
-    });
-    gameContainer.appendChild(div);
-  }
-}
+const render = (() => {
+  const renderBoard = () => {
+    const gameboard = Gameboard.gameboardArr;
+    const gameContainer = document.querySelector('.game-container');
+    gameContainer.textContent = '';
+    for (let i = 0; i < 9; i++) {
+      const div = document.createElement('div');
+      div.classList.add('square');
+      div.textContent = gameboard[i];
+      div.addEventListener('click', () => {
+        Gameboard.addMarker(i);
+        renderBoard();
+      });
+      gameContainer.appendChild(div);
+    }
+  };
+  return { renderBoard };
+})();
 
-render();
+render.renderBoard();
