@@ -6,3 +6,7 @@ const Gameboard = (() => {
 function createPlayer(name, marker) {
   return { name, marker };
 }
+
+const playGame = (() => {
+  const gameboard = Gameboard.gameboardArr;
+})();
