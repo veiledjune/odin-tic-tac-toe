@@ -1,11 +1,15 @@
 const Gameboard = (() => {
   const gameboardArr = ['', '', '', '', '', '', '', '', ''];
   const addMarker = (index) => {
+    const gameStatus = playGame.getGameStatus();
     if (gameboardArr[index]) return;
-    const playerTurn = playGame.getPlayerTurn();
-    if (playerTurn) {
+    if (gameStatus.playerTurn) {
       gameboardArr[index] = 'X';
-    } else gameboardArr[index] = 'O';
+      playGame.checkWin();
+    } else {
+      gameboardArr[index] = 'O';
+      playGame.checkWin();
+    }
     playGame.updatePlayerTurn();
   };
   return { gameboardArr, addMarker };
@@ -17,11 +21,15 @@ function createPlayer(name, marker) {
 
 const playGame = (() => {
   const gameboard = Gameboard.gameboardArr;
-  let playerTurn = true;
 
-  const getPlayerTurn = () => playerTurn;
+  const gameStatus = { gameActive: true, playerTurn: true };
 
-  const updatePlayerTurn = () => (playerTurn = !playerTurn);
+  const getGameStatus = () => gameStatus;
+
+  const updatePlayerTurn = () => {
+    gameStatus.playerTurn = !gameStatus.playerTurn;
+    console.log(gameStatus.playerTurn);
+  };
 
   const checkWin = () => {
     const winningCombos = [
@@ -44,9 +52,11 @@ const playGame = (() => {
         return;
       }
     }
-    if (gameboard.every((square) => square)) console.log('tie');
+    if (gameboard.every((square) => square)) {
+      console.log('tie');
+    }
   };
-  return { checkWin, getPlayerTurn, updatePlayerTurn };
+  return { checkWin, getGameStatus, updatePlayerTurn };
 })();
 
 function render() {
