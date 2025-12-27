@@ -9,6 +9,11 @@ function createPlayer(name, marker) {
 
 const playGame = (() => {
   const gameboard = Gameboard.gameboardArr;
+  let playerTurn = true;
+
+  const getPlayerTurn = () => playerTurn;
+
+  const updatePlayerTurn = () => (playerTurn = !playerTurn);
 
   const checkWin = () => {
     const winningCombos = [
@@ -33,7 +38,7 @@ const playGame = (() => {
     }
     if (gameboard.every((square) => square)) console.log('tie');
   };
-  return { checkWin };
+  return { checkWin, getPlayerTurn, updatePlayerTurn };
 })();
 
 function render() {
