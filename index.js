@@ -3,6 +3,7 @@ const Gameboard = (() => {
   const addMarker = (index) => {
     const gameStatus = playGame.getGameStatus();
     if (gameboardArr[index]) return;
+    if (!gameStatus.gameActive) return;
     if (gameStatus.playerTurn) {
       gameboardArr[index] = 'X';
       playGame.checkWin();
