@@ -35,4 +35,15 @@ const playGame = (() => {
   };
   return { checkWin };
 })();
-playGame.checkWin();
+
+function render() {
+  const gameContainer = document.querySelector('.game-container');
+  gameContainer.textContent = '';
+  for (let i = 0; i < 9; i++) {
+    const div = document.createElement('div');
+    div.classList.add('square');
+    gameContainer.appendChild(div);
+  }
+}
+
+render();
