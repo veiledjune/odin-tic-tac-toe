@@ -49,10 +49,12 @@ const playGame = (() => {
         gameboard[a] === gameboard[c]
       ) {
         console.log(`${gameboard[a]} wins`);
+        gameStatus.gameActive = false;
         return;
       }
     }
     if (gameboard.every((square) => square)) {
+      gameStatus.gameActive = false;
       console.log('tie');
     }
   };
