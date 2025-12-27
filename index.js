@@ -1,6 +1,14 @@
 const Gameboard = (() => {
-  const gameboardArr = ['o', 'o', 'o', 'o', 'x', 'x', 'x', 'o', 'o'];
-  return { gameboardArr };
+  const gameboardArr = ['', '', '', '', '', '', '', '', ''];
+  const addMarker = (index) => {
+    if (gameboardArr[index]) return;
+    const playerTurn = playGame.getPlayerTurn();
+    if (playerTurn) {
+      gameboardArr[index] = 'X';
+    } else gameboardArr[index] = 'O';
+    playGame.updatePlayerTurn();
+  };
+  return { gameboardArr, addMarker };
 })();
 
 function createPlayer(name, marker) {
@@ -47,6 +55,7 @@ function render() {
   for (let i = 0; i < 9; i++) {
     const div = document.createElement('div');
     div.classList.add('square');
+    div.addEventListener('click', () => Gameboard.addMarker(i));
     gameContainer.appendChild(div);
   }
 }
