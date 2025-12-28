@@ -34,9 +34,13 @@ const handlePlayers = (() => {
 const playGame = (() => {
   const gameboard = Gameboard.gameboardArr;
 
-  const gameStatus = { gameActive: true, playerTurn: true };
+  const gameStatus = { gameActive: false, playerTurn: true };
 
   const getGameStatus = () => gameStatus;
+
+  const toggleGameActive = () => {
+    gameStatus.gameActive = !gameStatus.gameActive;
+  };
 
   const updatePlayerTurn = () => {
     gameStatus.playerTurn = !gameStatus.playerTurn;
@@ -61,16 +65,16 @@ const playGame = (() => {
         gameboard[a] === gameboard[c]
       ) {
         render.updateResult(`Player ${gameboard[a]} Wins`);
-        gameStatus.gameActive = false;
+        toggleGameActive();
         return;
       }
     }
     if (gameboard.every((square) => square)) {
-      gameStatus.gameActive = false;
+      toggleGameActive();
       render.updateResult('Tie');
     }
   };
-  return { checkWin, getGameStatus, updatePlayerTurn };
+  return { checkWin, getGameStatus, updatePlayerTurn, toggleGameActive };
 })();
 
 const render = (() => {
@@ -96,5 +100,7 @@ const render = (() => {
   };
   return { renderBoard, updateResult };
 })();
+
+
 
 render.renderBoard();
