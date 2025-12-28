@@ -18,8 +18,9 @@ const Gameboard = (() => {
     }
     playGame.updatePlayerTurn();
   };
+  const getBoard = () => gameboardArr;
   const resetBoard = () => gameboardArr.fill('');
-  return { gameboardArr, addMarker, resetBoard };
+  return { getBoard, addMarker, resetBoard };
 })();
 
 const handlePlayers = (() => {
@@ -44,7 +45,8 @@ const handlePlayers = (() => {
 
 const playGame = (() => {
   const players = handlePlayers.getPlayers();
-  const gameboard = Gameboard.gameboardArr;
+
+  const gameboard = Gameboard.getBoard();
 
   const gameStatus = { gameActive: false, playerTurn: true };
 
@@ -106,7 +108,7 @@ const playGame = (() => {
 
 const render = (() => {
   const renderBoard = () => {
-    const gameboard = Gameboard.gameboardArr;
+    const gameboard = Gameboard.getBoard();
     const gameContainer = document.querySelector('.game-container');
     gameContainer.textContent = '';
     for (let i = 0; i < 9; i++) {
