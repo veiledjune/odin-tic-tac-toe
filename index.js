@@ -1,10 +1,12 @@
 const Gameboard = (() => {
   const gameboardArr = ['', '', '', '', '', '', '', '', ''];
   const addMarker = (index) => {
+    const playerOneTurn = gameStatus.playerTurn;
     const gameStatus = playGame.getGameStatus();
+    const gameIsActive = gameStatus.gameActive;
     if (gameboardArr[index]) return;
-    if (!gameStatus.gameActive) return;
-    if (gameStatus.playerTurn) {
+    if (!gameIsActive) return;
+    if (playerOneTurn) {
       gameboardArr[index] = 'X';
       playGame.checkWin();
     } else {
