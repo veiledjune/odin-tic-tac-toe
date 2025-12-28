@@ -142,8 +142,6 @@ function events() {
     if (playButton.textContent === 'Restart') {
       Gameboard.resetBoard();
       render.renderBoard();
-      handlePlayers.createPlayers();
-      playGame.startGame();
     }
     playButton.textContent = 'Restart';
     handlePlayers.createPlayers();
