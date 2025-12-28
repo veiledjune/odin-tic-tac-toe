@@ -1,15 +1,18 @@
 const Gameboard = (() => {
   const gameboardArr = ['', '', '', '', '', '', '', '', ''];
   const addMarker = (index) => {
+    const players = handlePlayers.getPlayers();
     const gameStatus = playGame.getGameStatus();
     const playerOneTurn = gameStatus.playerTurn;
     const gameIsActive = gameStatus.gameActive;
     if (gameboardArr[index]) return;
     if (!gameIsActive) return;
     if (playerOneTurn) {
+      render.updateResult(`${players.playerTwo.name}'s Turn`);
       gameboardArr[index] = 'X';
       playGame.checkWin();
     } else {
+      render.updateResult(`${players.playerOne.name}'s Turn`);
       gameboardArr[index] = 'O';
       playGame.checkWin();
     }
@@ -33,10 +36,14 @@ const handlePlayers = (() => {
       marker: 'O',
     };
   }
-  return { playersObject, createPlayers };
+
+  const getPlayers = () => playersObject;
+
+  return { createPlayers, getPlayers };
 })();
 
 const playGame = (() => {
+  const players = handlePlayers.getPlayers();
   const gameboard = Gameboard.gameboardArr;
 
   const gameStatus = { gameActive: false, playerTurn: true };
@@ -46,6 +53,7 @@ const playGame = (() => {
   const startGame = () => {
     gameStatus.gameActive = true;
     gameStatus.playerTurn = true;
+    render.updateResult(`${players.playerOne.name}'s Turn`);
   };
 
   const toggleGameActive = () => {
@@ -129,12 +137,12 @@ function events() {
     if (playButton.textContent === 'Restart') {
       Gameboard.resetBoard();
       render.renderBoard();
-      playGame.startGame();
       handlePlayers.createPlayers();
+      playGame.startGame();
     }
     playButton.textContent = 'Restart';
-    playGame.startGame();
     handlePlayers.createPlayers();
+    playGame.startGame();
   });
 }
 
