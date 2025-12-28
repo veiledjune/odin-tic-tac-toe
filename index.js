@@ -19,7 +19,9 @@ const Gameboard = (() => {
 
 const handlePlayers = (() => {
   const playersObject = {};
-  function createPlayers(playerOne, playerTwo) {
+  function createPlayers() {
+    const playerOne = document.getElementById('player-one').value;
+    const playerTwo = document.getElementById('player-two').value;
     playersObject.playerOne = {
       name: playerOne,
       marker: 'X',
@@ -113,6 +115,27 @@ const render = (() => {
   return { renderBoard, updateResult };
 })();
 
+function events() {
+  const form = document.querySelector('form');
+  const playButton = document.querySelector('.play-btn');
+  playButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    if (playButton.textContent === 'Restart') {
+      Gameboard.resetBoard();
+      render.renderBoard();
+      playGame.startGame();
+      handlePlayers.createPlayers();
+    }
+    playButton.textContent = 'Restart';
+    playGame.startGame();
+    handlePlayers.createPlayers();
+  });
+}
 
+events();
 
 render.renderBoard();
