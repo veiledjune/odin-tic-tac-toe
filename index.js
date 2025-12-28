@@ -13,7 +13,8 @@ const Gameboard = (() => {
     }
     playGame.updatePlayerTurn();
   };
-  return { gameboardArr, addMarker };
+  const resetBoard = () => gameboardArr.fill('');
+  return { gameboardArr, addMarker, resetBoard };
 })();
 
 const handlePlayers = (() => {
@@ -100,7 +101,5 @@ const render = (() => {
   };
   return { renderBoard, updateResult };
 })();
-
-
 
 render.renderBoard();
