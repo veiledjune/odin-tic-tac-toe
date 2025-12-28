@@ -38,3 +38,33 @@ body {
 .result-msg {
   font-size: 3rem;
 }
+
+/*Form*/
+
+form {
+  display: grid;
+  grid-template-columns: 1fr min-content 1fr;
+  align-items: center;
+}
+
+.form__input-container {
+  display: flex;
+  align-items: center;
+}
+
+input,
+label {
+  font-size: 1.25rem;
+}
+
+.start-btn {
+  cursor: pointer;
+  grid-row-start: 1;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  border: none;
+  color: white;
+  background-color: rgb(60, 57, 184);
+  font-size: 1.25rem;
+  padding: 5px 20px;
+}
