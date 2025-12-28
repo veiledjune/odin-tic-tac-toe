@@ -1,8 +1,8 @@
 const Gameboard = (() => {
   const gameboardArr = ['', '', '', '', '', '', '', '', ''];
   const addMarker = (index) => {
-    const playerOneTurn = gameStatus.playerTurn;
     const gameStatus = playGame.getGameStatus();
+    const playerOneTurn = gameStatus.playerTurn;
     const gameIsActive = gameStatus.gameActive;
     if (gameboardArr[index]) return;
     if (!gameIsActive) return;
