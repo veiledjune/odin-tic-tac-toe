@@ -39,6 +39,11 @@ const playGame = (() => {
 
   const getGameStatus = () => gameStatus;
 
+  const startGame = () => {
+    gameStatus.gameActive = true;
+    gameStatus.playerTurn = true;
+  };
+
   const toggleGameActive = () => {
     gameStatus.gameActive = !gameStatus.gameActive;
   };
@@ -75,7 +80,13 @@ const playGame = (() => {
       render.updateResult('Tie');
     }
   };
-  return { checkWin, getGameStatus, updatePlayerTurn, toggleGameActive };
+  return {
+    checkWin,
+    getGameStatus,
+    updatePlayerTurn,
+    toggleGameActive,
+    startGame,
+  };
 })();
 
 const render = (() => {
@@ -101,5 +112,7 @@ const render = (() => {
   };
   return { renderBoard, updateResult };
 })();
+
+
 
 render.renderBoard();
