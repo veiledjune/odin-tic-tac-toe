@@ -45,16 +45,33 @@ form {
   display: grid;
   grid-template-columns: 1fr min-content 1fr;
   align-items: center;
+  gap: 1em;
 }
 
 .form__input-container {
   display: flex;
   align-items: center;
+  gap: 1em;
 }
 
 input,
 label {
   font-size: 1.25rem;
+}
+
+input {
+  padding: 3px 15px;
+  border: none;
+  background-color: rgb(219, 219, 219);
+  border-radius: 3px;
+}
+
+input::placeholder {
+  color: black;
+}
+
+input:focus {
+  outline: 1px solid black;
 }
 
 .start-btn {
@@ -66,5 +83,6 @@ label {
   color: white;
   background-color: rgb(60, 57, 184);
   font-size: 1.25rem;
-  padding: 5px 20px;
+  padding: 5px 25px;
+  border-radius: 4px;
 }
