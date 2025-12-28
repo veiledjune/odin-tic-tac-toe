@@ -18,11 +18,18 @@ const Gameboard = (() => {
 
 const handlePlayers = (() => {
   const playersObject = {};
+  function createPlayers(playerOne, playerTwo) {
+    playersObject.playerOne = {
+      name: playerOne,
+      marker: 'X',
+    };
+    playersObject.playerTwo = {
+      name: playerTwo,
+      marker: 'O',
+    };
+  }
+  return { playersObject, createPlayers };
 })();
-
-function createPlayer(name, marker) {
-  return { name, marker };
-}
 
 const playGame = (() => {
   const gameboard = Gameboard.gameboardArr;
