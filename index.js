@@ -1,22 +1,8 @@
 const Gameboard = (() => {
   const gameboardArr = ['', '', '', '', '', '', '', '', ''];
-  const addMarker = (index) => {
-    const players = handlePlayers.getPlayers();
-    const gameStatus = playGame.getGameStatus();
-    const playerOneTurn = gameStatus.playerTurn;
-    const gameIsActive = gameStatus.gameActive;
+  const addMarker = (index, marker) => {
     if (gameboardArr[index]) return;
-    if (!gameIsActive) return;
-    if (playerOneTurn) {
-      render.updateResult(`${players.playerTwo.name}'s Turn`);
-      gameboardArr[index] = 'X';
-      playGame.checkWin();
-    } else {
-      render.updateResult(`${players.playerOne.name}'s Turn`);
-      gameboardArr[index] = 'O';
-      playGame.checkWin();
-    }
-    playGame.updatePlayerTurn();
+    gameboardArr[index] = marker;
   };
   const getBoard = () => gameboardArr;
   const resetBoard = () => gameboardArr.fill('');
@@ -44,8 +30,6 @@ const handlePlayers = (() => {
 })();
 
 const playGame = (() => {
-  const players = handlePlayers.getPlayers();
-
   const gameboard = Gameboard.getBoard();
 
   const gameStatus = { gameActive: false, playerTurn: true };
@@ -53,9 +37,10 @@ const playGame = (() => {
   const getGameStatus = () => gameStatus;
 
   const startGame = () => {
+    const playerOne = handlePlayers.getPlayers().playerOne;
     gameStatus.gameActive = true;
     gameStatus.playerTurn = true;
-    render.updateResult(`${players.playerOne.name}'s Turn`);
+    render.updateResult(`${playerOne.name}'s Turn`);
   };
 
   const toggleGameActive = () => {
@@ -67,6 +52,7 @@ const playGame = (() => {
   };
 
   const checkWin = () => {
+    if (!gameStatus.gameActive) return;
     const winningCombos = [
       [0, 1, 2],
       [3, 4, 5],
@@ -78,24 +64,15 @@ const playGame = (() => {
       [2, 4, 6],
     ];
     for (const [a, b, c] of winningCombos) {
-      const playerOne = players.playerOne;
-      const playerTwo = players.playerTwo;
       if (
         gameboard[a] &&
         gameboard[a] === gameboard[b] &&
         gameboard[a] === gameboard[c]
-      ) {
-        if (gameboard[a] === playerOne.marker) {
-          render.updateResult(`${playerOne.name} Wins!`);
-        } else render.updateResult(`${playerTwo.name} Wins!`);
-        toggleGameActive();
-        return;
-      }
+      )
+        return gameboard[a];
     }
-    if (gameboard.every((square) => square)) {
-      toggleGameActive();
-      render.updateResult('Tie');
-    }
+    if (gameboard.every((square) => square)) return 'Tie';
+    return null;
   };
   return {
     checkWin,
@@ -116,8 +93,27 @@ const render = (() => {
       div.classList.add('square');
       div.textContent = gameboard[i];
       div.addEventListener('click', () => {
-        Gameboard.addMarker(i);
+        const gameStatus = playGame.getGameStatus();
+        const gameIsActive = gameStatus.gameActive;
+        if (!gameIsActive) return;
+        const players = handlePlayers.getPlayers();
+        const playerOne = players.playerOne;
+        const playerTwo = players.playerTwo;
+        const currentPlayer = gameStatus.playerTurn ? playerOne : playerTwo;
+        Gameboard.addMarker(i, currentPlayer.marker);
         renderBoard();
+        const result = playGame.checkWin();
+        if (result) {
+          playGame.toggleGameActive();
+          if (result === currentPlayer.marker) {
+            return updateResult(`${currentPlayer.name} Wins!`);
+          } else if (result === 'Tie') return updateResult(`Tie!`);
+        } else {
+          if (gameStatus.playerTurn) {
+            updateResult(`${playerTwo.name}'s Turn`);
+          } else updateResult(`${playerOne.name}'s Turn`);
+          playGame.updatePlayerTurn();
+        }
       });
       gameContainer.appendChild(div);
     }
