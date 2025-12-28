@@ -62,7 +62,6 @@ const playGame = (() => {
 
   const updatePlayerTurn = () => {
     gameStatus.playerTurn = !gameStatus.playerTurn;
-    console.log(gameStatus.playerTurn);
   };
 
   const checkWin = () => {
