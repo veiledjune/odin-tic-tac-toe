@@ -77,12 +77,16 @@ const playGame = (() => {
       [2, 4, 6],
     ];
     for (const [a, b, c] of winningCombos) {
+      const playerOne = players.playerOne;
+      const playerTwo = players.playerTwo;
       if (
         gameboard[a] &&
         gameboard[a] === gameboard[b] &&
         gameboard[a] === gameboard[c]
       ) {
-        render.updateResult(`Player ${gameboard[a]} Wins`);
+        if (gameboard[a] === playerOne.marker) {
+          render.updateResult(`${playerOne.name} Wins!`);
+        } else render.updateResult(`${playerTwo.name} Wins!`);
         toggleGameActive();
         return;
       }
