@@ -16,6 +16,10 @@ const Gameboard = (() => {
   return { gameboardArr, addMarker };
 })();
 
+const handlePlayers = (() => {
+  const playersObject = {};
+})();
+
 function createPlayer(name, marker) {
   return { name, marker };
 }
